@@ -1,12 +1,14 @@
 import { Component } from 'react';
-
-interface ButtonProps {
-  text: string;
-}
+import classes from './Button.module.css';
+import { ButtonProps } from '../interface/ButtonProps';
 
 export default class Button extends Component<ButtonProps> {
   render() {
     const { text } = this.props;
-    return <button type="submit">{text}</button>;
+    return (
+      <button className={classes.searchBtn} type="submit">
+        {text}
+      </button>
+    );
   }
 }

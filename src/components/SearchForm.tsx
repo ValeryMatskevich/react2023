@@ -1,17 +1,15 @@
 import { Component } from 'react';
 import Input from './Input';
 import Button from './Button';
+import classes from './SearchForm.module.css';
+import { SearchFormProps } from '../interface/SearchFormProps';
+import { SearchFormState } from '../interface/SearchFormState';
 
-interface SearchProps {
-  onSubmit: (value: string) => void;
-}
-
-interface SearchState {
-  inputValue: string;
-}
-
-export default class SearchForm extends Component<SearchProps, SearchState> {
-  constructor(props: SearchProps) {
+export default class SearchForm extends Component<
+  SearchFormProps,
+  SearchFormState
+> {
+  constructor(props: SearchFormProps) {
     super(props);
     this.state = {
       inputValue: localStorage.getItem('pokemonName') || '',
@@ -32,7 +30,7 @@ export default class SearchForm extends Component<SearchProps, SearchState> {
   render() {
     const { inputValue } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form className={classes.searchForm} onSubmit={this.handleSubmit}>
         <Input
           type="search"
           placeholder="Pokemon name"
