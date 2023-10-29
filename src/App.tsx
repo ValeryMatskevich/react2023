@@ -1,5 +1,8 @@
+import React from 'react';
+import PokemonsPage from './components/PokemonsPage';
+
 function App() {
-  return <h1>Hello World</h1>;
+  return <PokemonsPage />;
 }
 
 export default App;
