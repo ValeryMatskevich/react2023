@@ -7,10 +7,10 @@ export default class PokemonCard extends Component<PokemonCardProps> {
   render() {
     const { name, img } = this.props;
     return (
-      <div className={classes.card}>
+      <li className={classes.card}>
         <p className={classes.name}>{upperCaseFirst(name)}</p>
         <img className={classes.img} src={img} alt={name} />
-      </div>
+      </li>
     );
   }
 }
