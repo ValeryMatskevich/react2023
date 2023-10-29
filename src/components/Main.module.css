@@ -1,0 +1,38 @@
+main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media screen and (min-width: 768px) {
+  main {
+    max-width: 1100px;
+    margin: auto;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-left: 50px;
+    padding-right: 50px;
+    box-sizing: border-box;
+    min-height: calc(100vh - 80px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-image:
+      url('https://www.transparenttextures.com/patterns/45-degree-fabric-dark.png');
+  }
+}
+
+@media screen and (max-width: 767px) {
+  main {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 100px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-image:
+      url('https://www.transparenttextures.com/patterns/45-degree-fabric-dark.png');
+  }
+}
