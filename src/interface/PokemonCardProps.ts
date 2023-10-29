@@ -1,4 +1,5 @@
 export interface PokemonCardProps {
   name: string;
-  img: string;
+  img?: string;
+  id: number;
 }
