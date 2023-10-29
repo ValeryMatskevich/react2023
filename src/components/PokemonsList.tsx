@@ -8,8 +8,13 @@ export default class PokemonsList extends Component<PokemonsListProps> {
     const { data } = this.props;
     return (
       <ul className={classes.list}>
-        {data.map(({ id, name, sprites: { front_default } }) => (
-          <PokemonCard name={name} img={front_default} key={id} />
+        {data.map(({ id, name, sprites }) => (
+          <PokemonCard
+            name={name}
+            img={sprites?.front_default}
+            key={id}
+            id={id}
+          />
         ))}
       </ul>
     );
