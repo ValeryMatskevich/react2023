@@ -37,31 +37,29 @@ export default class PokemonsPage extends Component<
   getPokemonsListData() {
     const url = 'https://pokeapi.co/api/v2/pokemon/';
     this.setState({ pokemonData: [], isLoading: true });
-    setTimeout(() => {
-      fetch(`${url}`)
-        .then((response) => response.json())
-        .then((data) =>
-          data.results.forEach((element: PokemonResponseItem) => {
-            return fetch(element.url)
-              .then((response) => response.json())
-              .then((pokemon) => {
-                const { pokemonData } = this.state;
-                const isDuplicate = pokemonData.some(
-                  (item) => item.id === pokemon.id
-                );
-                if (!isDuplicate) {
-                  this.setState((state) => ({
-                    pokemonData: [...state.pokemonData, pokemon].sort(
-                      (a, b) => a.id - b.id
-                    ),
-                  }));
-                }
-              });
-          })
-        )
-        .then(() => this.setState({ isLoading: false }))
-        .catch((error) => console.log('error: ', error));
-    }, 15000);
+    fetch(`${url}`)
+      .then((response) => response.json())
+      .then((data) =>
+        data.results.forEach((element: PokemonResponseItem) => {
+          return fetch(element.url)
+            .then((response) => response.json())
+            .then((pokemon) => {
+              const { pokemonData } = this.state;
+              const isDuplicate = pokemonData.some(
+                (item) => item.id === pokemon.id
+              );
+              if (!isDuplicate) {
+                this.setState((state) => ({
+                  pokemonData: [...state.pokemonData, pokemon].sort(
+                    (a, b) => a.id - b.id
+                  ),
+                }));
+              }
+            });
+        })
+      )
+      .then(() => this.setState({ isLoading: false }))
+      .catch((error) => console.log('error: ', error));
   }
 
   getPokemonData(searchValue: string) {
