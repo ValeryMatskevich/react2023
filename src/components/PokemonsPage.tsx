@@ -3,6 +3,7 @@ import Header from './Header';
 import Main from './Main';
 import { PokemonsPageState } from '../interface/PokemonsPageState';
 import { PokemonsPageProps } from '../interface/PokemonsPageProps';
+import { PokemonResponseItem } from '../interface/PokemonResponseItem';
 
 export default class PokemonsPage extends Component<
   PokemonsPageProps,
@@ -37,7 +38,7 @@ export default class PokemonsPage extends Component<
     fetch(`${url}`)
       .then((response) => response.json())
       .then((data) =>
-        data.results.forEach((element) => {
+        data.results.forEach((element: PokemonResponseItem) => {
           return fetch(element.url)
             .then((response) => response.json())
             .then((pokemon) => {
