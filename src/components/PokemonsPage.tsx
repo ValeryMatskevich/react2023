@@ -59,7 +59,7 @@ export default class PokemonsPage extends Component<
         })
       )
       .then(() => this.setState({ isLoading: false }))
-      .catch((error) => console.log('error: ', error));
+      .catch((error) => error);
   }
 
   getPokemonData(searchValue: string) {
@@ -69,7 +69,7 @@ export default class PokemonsPage extends Component<
       .then((response) => response.json())
       .then((data) => this.setState({ pokemonData: [data] }))
       .then(() => this.setState({ isLoading: false }))
-      .catch((error) => console.log('error: ', error));
+      .catch((error) => error);
   }
 
   render() {
