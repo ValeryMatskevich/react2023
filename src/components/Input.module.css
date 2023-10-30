@@ -9,8 +9,6 @@
   border: none;
 }
 
-
-
 @media screen and (max-width: 480px) {
   .searchInput {
     width: 200px;

@@ -6,7 +6,6 @@
   background-position: center;
   display: flex;
   padding-left: 180px;
-
 }
 
 .errorContainer {
@@ -27,5 +26,4 @@
   font-size: 24px;
   color: #333333;
   text-align: center;
-
 }
