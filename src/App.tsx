@@ -1,7 +1,8 @@
+import { Component } from 'react';
 import PokemonsPage from './components/PokemonsPage';
 
-function App() {
-  return <PokemonsPage />;
+export default class App extends Component {
+  render() {
+    return <PokemonsPage />;
+  }
 }
-
-export default App;
