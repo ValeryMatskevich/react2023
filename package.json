@@ -45,7 +45,7 @@
     "vitest": "^0.34.6"
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx, html.css}": "prettier --write .",
-    "src/**/*.{ts,tsx}": "eslint --color"
+    "src/.{ts,tsx, html.css}": "prettier --write",
+    "src/.{ts,tsx}": "eslint --color"
   }
 }
