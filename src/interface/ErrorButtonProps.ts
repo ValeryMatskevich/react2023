@@ -1,4 +1,1 @@
-export interface ErrorButtonProps {
-  onClick: () => void;
-  className?: string;
-}
+export interface ErrorButtonProps {}
