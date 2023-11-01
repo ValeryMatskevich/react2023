@@ -5,6 +5,7 @@ import { PokemonsPageState } from '../interface/PokemonsPageState';
 import { PokemonsPageProps } from '../interface/PokemonsPageProps';
 import { PokemonResponseItem } from '../interface/PokemonResponseItem';
 import Loader from './Loader';
+import ErrorButton from './ErrorButton';
 
 export default class PokemonsPage extends Component<
   PokemonsPageProps,
@@ -76,6 +77,7 @@ export default class PokemonsPage extends Component<
     const { pokemonData, isLoading } = this.state;
     return (
       <>
+        <ErrorButton />
         <Header onSubmit={this.handleSubmit} />
         {isLoading ? <Loader /> : <Main data={pokemonData} />}
       </>

@@ -1,7 +1,6 @@
-import { Component } from 'react';
+import { Component, ErrorInfo } from 'react';
 import { ErrorBoundaryProps } from '../interface/ErrorBoundaryProps';
 import { ErrorBoundaryState } from '../interface/ErrorBoundaryState';
-import ErrorButton from './ErrorButton';
 import classes from './ErrorBoundary.module.css';
 
 export default class ErrorBoundary extends Component<
@@ -19,10 +18,9 @@ export default class ErrorBoundary extends Component<
     return { hasError: true, error };
   }
 
-  handleErrorButtonClick = () => {
-    this.setState({ hasError: true });
-    throw new Error('This is a test error.');
-  };
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.log(error, errorInfo);
+  }
 
   render() {
     const { children } = this.props;
@@ -38,11 +36,6 @@ export default class ErrorBoundary extends Component<
       );
     }
 
-    return (
-      <>
-        {children}
-        <ErrorButton onClick={this.handleErrorButtonClick} />
-      </>
-    );
+    return children;
   }
 }
