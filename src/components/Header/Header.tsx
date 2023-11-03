@@ -1,5 +1,5 @@
+import SearchForm from '../SearchForm/SearchForm';
 import classes from './Header.module.css';
-import SearchForm from '../SearchForm';
 
 interface HeaderProps {
   onSubmit: (value: string) => void;
