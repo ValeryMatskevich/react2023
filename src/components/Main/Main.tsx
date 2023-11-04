@@ -1,4 +1,4 @@
-import { PokemonDetails } from '../API/data';
+import { PokemonDetails } from '../../API/GetPokemons';
 import PokemonsList from '../PokemonsList/PokemonsList';
 import classes from './Main.module.css';
 

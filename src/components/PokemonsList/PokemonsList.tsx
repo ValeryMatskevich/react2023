@@ -1,6 +1,6 @@
 import PokemonCard from '../PokemonCard/PokemonCard';
 import classes from './PokemonsList.module.css';
-import { PokemonDetails } from '../API/data';
+import { PokemonDetails } from '../../API/GetPokemons';
 
 interface PokemonsListProps {
   data: PokemonDetails[];

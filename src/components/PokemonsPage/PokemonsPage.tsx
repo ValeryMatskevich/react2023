@@ -3,7 +3,7 @@ import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Loader from '../UI/Loader/Loader';
 import ErrorButton from '../UI/ErrorButton/ErrorButton';
-import getPokemons, { PokemonDetails } from '../API/data';
+import getPokemons, { PokemonDetails } from '../../API/GetPokemons';
 
 function PokemonsPage() {
   const [isLoading, setIsLoading] = useState(true);
