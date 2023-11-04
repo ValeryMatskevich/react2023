@@ -18,7 +18,7 @@ function SearchForm({ onSubmit }: SearchFormProps) {
 
   function handleSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
-    onSubmit(inputValue);
+    onSubmit(inputValue.toLowerCase());
   }
 
   return (

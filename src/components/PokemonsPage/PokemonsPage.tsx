@@ -8,18 +8,20 @@ import getPokemons, { PokemonDetails } from '../API/data';
 function PokemonsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [pokemonData, setPokemonData] = useState<PokemonDetails[]>([]);
-  const [inputValue] = useState(localStorage.getItem('pokemonName') || '');
+  const [inputValue, setinputValue] = useState(
+    localStorage.getItem('pokemonName') || ''
+  );
 
   const handleSubmit = async (pokemonName: string) => {
     localStorage.setItem('pokemonName', pokemonName);
+    setIsLoading(false);
     try {
       const cards = await getPokemons(pokemonName);
-      setIsLoading(false);
       setPokemonData(cards);
+      setinputValue(pokemonName);
     } catch (error) {
-      setIsLoading(false);
+      setPokemonData([]);
     }
-    return inputValue;
   };
 
   useEffect(() => {
