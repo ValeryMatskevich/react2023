@@ -1,9 +1,9 @@
-import PokemonsList from '../PokemonsList';
+import { PokemonDetails } from '../API/data';
+import PokemonsList from '../PokemonsList/PokemonsList';
 import classes from './Main.module.css';
-import { PokemonData } from '../../interface/PokemonData';
 
 interface MainProps {
-  data: PokemonData[];
+  data: PokemonDetails[];
 }
 
 function Main({ data }: MainProps) {
