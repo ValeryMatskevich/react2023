@@ -7,32 +7,35 @@ import getPokemons, { PokemonDetails } from '../API/data';
 
 function PokemonsPage() {
   const [isLoading, setIsLoading] = useState(true);
-  const [pokemonData, setPokemonData] = useState<PokemonDetails[]>([]);
+  const [pokemonsData, setPokemonsData] = useState<PokemonDetails[]>([]);
   const [inputValue, setinputValue] = useState(
     localStorage.getItem('pokemonName') || ''
   );
 
-  const handleSubmit = async (pokemonName: string) => {
+  const handleSubmit = (pokemonName: string) => {
     localStorage.setItem('pokemonName', pokemonName);
+    setinputValue(pokemonName);
+  };
+
+  async function getPokemonsData(pokemonName: string) {
     setIsLoading(false);
     try {
       const cards = await getPokemons(pokemonName);
-      setPokemonData(cards);
-      setinputValue(pokemonName);
+      setPokemonsData(cards);
     } catch (error) {
-      setPokemonData([]);
+      setPokemonsData([]);
     }
-  };
+  }
 
   useEffect(() => {
-    handleSubmit(inputValue);
-  }, []);
+    getPokemonsData(inputValue);
+  }, [inputValue]);
 
   return (
     <>
       <ErrorButton />
       <Header onSubmit={handleSubmit} />
-      {isLoading ? <Loader /> : <Main data={pokemonData} />}
+      {isLoading ? <Loader /> : <Main data={pokemonsData} />}
     </>
   );
 }
