@@ -22,15 +22,17 @@ function SearchForm({ onSubmit }: SearchFormProps) {
   }
 
   return (
-    <form className={classes.searchForm} onSubmit={handleSubmit}>
-      <Input
-        type="search"
-        placeholder="Pokemon name"
-        onChange={handleInputChange}
-        value={inputValue}
-      />
-      <Button text="🔍" />
-    </form>
+    <div className={classes.searchFormWrapper}>
+      <form className={classes.searchForm} onSubmit={handleSubmit}>
+        <Input
+          type="search"
+          placeholder="Pokemon name"
+          onChange={handleInputChange}
+          value={inputValue}
+        />
+        <Button text="🔍" />
+      </form>
+    </div>
   );
 }
 

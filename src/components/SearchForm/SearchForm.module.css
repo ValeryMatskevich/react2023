@@ -1,6 +1,17 @@
 .searchForm {
-  background-color: #fff;
-  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8cecc;
+  border-radius: 20px;
   padding: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.searchFormWrapper {
+  height: 80px;
+  width: 100%;
+  background-color: #f44336;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
