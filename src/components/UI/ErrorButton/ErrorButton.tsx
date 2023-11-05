@@ -14,7 +14,7 @@ function ErrorButton() {
   }
 
   return (
-    <button type="button" className={classes.errorBtn} onClick={toggleError}>
+    <button type="button" className={classes.errorButton} onClick={toggleError}>
       <p className="errorMessage">Error</p>
       <img src={pokeballImg} alt="Pokemon" className="pokemon-image" />
     </button>

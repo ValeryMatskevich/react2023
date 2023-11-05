@@ -3,7 +3,6 @@ import classes from './PokemonCard.module.css';
 export interface PokemonCardProps {
   name: string;
   img?: string;
-  id: number;
 }
 
 function PokemonCard({ name, img }: PokemonCardProps) {

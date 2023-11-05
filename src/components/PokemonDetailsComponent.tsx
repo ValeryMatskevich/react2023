@@ -3,12 +3,12 @@ import getPokemons, { PokemonDetails } from '../API/GetPokemons';
 import Loader from './UI/Loader/Loader';
 import classes from './PokemonDetailsComponent.module.css';
 
-interface Abc {
+interface PokemonDetailsProps {
   id: string;
   onClose: () => void;
 }
 
-function PokemonDetailsComponent({ onClose, id }: Abc) {
+function PokemonDetailsComponent({ onClose, id }: PokemonDetailsProps) {
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 

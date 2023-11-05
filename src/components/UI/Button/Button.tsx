@@ -6,7 +6,7 @@ interface ButtonProps {
 
 function Button({ ...props }: ButtonProps) {
   return (
-    <button className={classes.searchBtn} type="submit">
+    <button className={classes.searchButton} type="submit">
       {props.text}
     </button>
   );

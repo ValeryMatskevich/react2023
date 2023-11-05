@@ -31,7 +31,7 @@ function Pagination({
 
   return (
     <div className={classes.pagination}>
-      <div className={classes.paginationBtns}>
+      <div className={classes.paginationButtons}>
         <button
           type="button"
           onClick={() => setPage((prev) => prev - 1)}
