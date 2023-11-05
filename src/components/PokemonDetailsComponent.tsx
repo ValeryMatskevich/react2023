@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import getPokemons, { PokemonDetails } from '../API/GetPokemons';
 import Loader from './UI/Loader/Loader';
+import classes from './PokemonDetailsComponent.module.css';
 
 interface Abc {
   id: string;
@@ -28,7 +29,7 @@ function PokemonDetailsComponent({ onClose, id }: Abc) {
   return isLoading || !pokemonDetails.length ? (
     <Loader />
   ) : (
-    <div>
+    <div className={classes.details}>
       <button type="button" onClick={onClose}>
         Закрыть
       </button>

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import classes from './Pagination.module.css';
 
 interface PaginationProps {
   page: number;
@@ -29,8 +30,8 @@ function Pagination({
   }, []);
 
   return (
-    <div>
-      <div>
+    <div className={classes.pagination}>
+      <div className={classes.paginationBtns}>
         <button
           type="button"
           onClick={() => setPage((prev) => prev - 1)}
@@ -50,8 +51,8 @@ function Pagination({
         </button>
       </div>
 
-      <div>
-        Items per page:
+      <div className={classes.itemsPerPage}>
+        Pokemons per page:
         <select
           value={limit}
           onChange={(e) => {
@@ -59,7 +60,6 @@ function Pagination({
             setPage(1);
           }}
         >
-          <option value={5}>5</option>
           <option value={10}>10</option>
           <option value={20}>20</option>
           <option value={30}>30</option>

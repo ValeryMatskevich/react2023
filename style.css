@@ -4,6 +4,13 @@
   box-sizing: border-box;
 }
 
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
 a {
   text-decoration: none;
 }
@@ -13,19 +20,4 @@ a:visited,
 a:hover,
 a:active {
   color: inherit;
-}
-
-nav {
-  display: flex;
-  gap: 16px;
-  justify-content: end;
-  margin: 0 auto;
-}
-
-nav a {
-  text-decoration: none;
-}
-
-nav a.active {
-  background-color: red;
 }
