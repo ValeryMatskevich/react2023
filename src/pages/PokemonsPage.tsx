@@ -15,7 +15,7 @@ function PokemonsPage() {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
-  const [inputValue, setinputValue] = useState(
+  const [inputValue, setInputValue] = useState(
     localStorage.getItem('pokemonName') || ''
   );
   const [, setSearchParams] = useSearchParams();
@@ -25,7 +25,7 @@ function PokemonsPage() {
 
   const handleSubmit = (pokemonName: string) => {
     localStorage.setItem('pokemonName', pokemonName);
-    setinputValue(pokemonName);
+    setInputValue(pokemonName);
     setSearchParams(`?pokemon=${pokemonName}`);
   };
 

@@ -20,6 +20,11 @@ export interface PokemonDetails {
     front_female: string;
     front_shiny: string;
     front_shiny_female: string;
+    other: {
+      dream_world: {
+        front_default: string;
+      };
+    };
   };
   weight: string;
   height: string;

@@ -30,9 +30,15 @@ function PokemonDetailsComponent({ onClose, id }: Abc) {
     <Loader />
   ) : (
     <div className={classes.details}>
-      <button type="button" onClick={onClose}>
+      <button className={classes.closeButton} type="button" onClick={onClose}>
         Закрыть
       </button>
+      <h2>{pokemonDetails[0].name}</h2>
+      <img
+        src={pokemonDetails[0].sprites.other.dream_world.front_default}
+        alt={pokemonDetails[0].name}
+      />
+
       <p>Height: {pokemonDetails[0].height}</p>
       <p>Weight: {pokemonDetails[0].weight}</p>
     </div>
