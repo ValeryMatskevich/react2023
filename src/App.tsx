@@ -5,7 +5,7 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import About from './pages/About';
-import RootLayout from './pages/RootPage';
+import RootLayout from './pages/RootLayout';
 import NotFound from './pages/NotFound';
 import Home from './pages/PokemonsPage';
 import ErrorBoundary from './components/ErrorBoundary';
