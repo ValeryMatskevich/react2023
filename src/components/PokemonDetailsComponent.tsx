@@ -15,7 +15,7 @@ function PokemonDetailsComponent({ onClose, id }: Abc) {
     setIsLoading(false);
     try {
       const pokemon = await getPokemons(pokemonName);
-      setPokemonDetails(pokemon);
+      setPokemonDetails(pokemon.pokemonDetails);
     } catch (error) {
       setPokemonDetails([]);
     }

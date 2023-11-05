@@ -12,27 +12,38 @@ export interface PokemonDetails {
   id: number;
   img: string;
   sprites: {
+    back_default: string;
+    back_female: string;
+    back_shiny: string;
+    back_shiny_female: string;
     front_default: string;
+    front_female: string;
+    front_shiny: string;
+    front_shiny_female: string;
   };
-  abilities: {
-    ability: {
-      name: string;
-      url: string;
-    };
-  }[];
+  weight: string;
+  height: string;
 }
 
-const getPokemons = async (pokemonName?: string): Promise<PokemonDetails[]> => {
+const getPokemons = async (
+  pokemonName?: string,
+  page = 1,
+  limit = 5
+): Promise<{ pokemonDetails: PokemonDetails[]; count?: number }> => {
+  const offset = (page - 1) * limit;
   const url = pokemonName ? `${baseUrl}/${pokemonName}` : baseUrl;
 
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(url, {
+      params: { limit, offset },
+    });
     if (pokemonName) {
       const pokemonDetails = [response.data];
-      return pokemonDetails;
+      return { pokemonDetails };
     }
 
     const pokemons: Pokemon[] = response.data.results;
+    const { count } = response.data;
 
     const pokemonDetailsResponses = await Promise.all(
       pokemons.map((pokemon) => axios.get(pokemon.url))
@@ -42,7 +53,7 @@ const getPokemons = async (pokemonName?: string): Promise<PokemonDetails[]> => {
       (pokemon) => pokemon.data
     );
 
-    return pokemonDetails;
+    return { pokemonDetails, count };
   } catch (error) {
     throw new Error('Failed to fetch data');
   }

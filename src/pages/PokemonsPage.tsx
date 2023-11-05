@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import getPokemons, { PokemonDetails } from '../API/GetPokemons';
 import SearchForm from '../components/SearchForm/SearchForm';
@@ -7,10 +7,14 @@ import ErrorButton from '../components/UI/ErrorButton/ErrorButton';
 import PokemonsList from '../components/PokemonsList/PokemonsList';
 import PokemonDetailsComponent from '../components/PokemonDetailsComponent';
 import classes from './PokemonsPage.module.css';
+import Pagination from '../components/UI/Pagination/Pagination';
 
 function PokemonsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [pokemonsData, setPokemonsData] = useState<PokemonDetails[]>([]);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5);
+  const [totalPages, setTotalPages] = useState(0);
   const [inputValue, setinputValue] = useState(
     localStorage.getItem('pokemonName') || ''
   );
@@ -23,19 +27,23 @@ function PokemonsPage() {
     setinputValue(pokemonName);
   };
 
-  async function getPokemonsData(pokemonName: string) {
-    setIsLoading(false);
-    try {
-      const cards = await getPokemons(pokemonName);
-      setPokemonsData(cards);
-    } catch (error) {
-      setPokemonsData([]);
-    }
-  }
+  const getPokemonsData = useCallback(
+    async (pokemonName: string, pageValue: number, limitValue: number) => {
+      setIsLoading(false);
+      try {
+        const cards = await getPokemons(pokemonName, pageValue, limitValue);
+        setPokemonsData(cards.pokemonDetails);
+        if (cards.count) setTotalPages(Math.ceil(cards.count / limit));
+      } catch (error) {
+        setPokemonsData([]);
+      }
+    },
+    [limit]
+  );
 
   useEffect(() => {
-    getPokemonsData(inputValue);
-  }, [inputValue]);
+    getPokemonsData(inputValue, page, limit);
+  }, [getPokemonsData, inputValue, page, limit]);
 
   const handleClose = () => {
     navigate('/');
@@ -48,21 +56,30 @@ function PokemonsPage() {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className={classes.wrapper}>
-          <PokemonsList data={pokemonsData} />
-          {id && (
-            <>
-              <div
-                className={classes.hidden}
-                onClick={handleClose}
-                onKeyDown={handleClose}
-                role="button"
-                tabIndex={0}
-                aria-label="overlay"
-              />
-              <PokemonDetailsComponent id={id} onClose={handleClose} />
-            </>
-          )}
+        <div className={classes.contentWrapper}>
+          <div className={classes.wrapper}>
+            <PokemonsList data={pokemonsData} />
+            {id && (
+              <>
+                <div
+                  className={classes.hidden}
+                  onClick={handleClose}
+                  onKeyDown={handleClose}
+                  role="button"
+                  tabIndex={0}
+                  aria-label="overlay"
+                />
+                <PokemonDetailsComponent id={id} onClose={handleClose} />
+              </>
+            )}
+          </div>
+          <Pagination
+            setPage={setPage}
+            page={page}
+            setLimit={setLimit}
+            limit={limit}
+            totalPages={totalPages}
+          />
         </div>
       )}
     </>

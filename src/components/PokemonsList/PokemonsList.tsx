@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import PokemonCard from '../PokemonCard/PokemonCard';
 import classes from './PokemonsList.module.css';
 import { PokemonDetails } from '../../API/GetPokemons';
@@ -15,15 +16,13 @@ function PokemonsList({ data }: PokemonsListProps) {
       </div>
     );
   }
+
   return (
     <ul className={classes.list}>
       {data.map(({ id, name, sprites }) => (
-        <PokemonCard
-          name={name}
-          img={sprites?.front_default}
-          key={name}
-          id={id}
-        />
+        <Link to={`/${name}`} key={name}>
+          <PokemonCard name={name} img={sprites?.front_default} id={id} />
+        </Link>
       ))}
     </ul>
   );
