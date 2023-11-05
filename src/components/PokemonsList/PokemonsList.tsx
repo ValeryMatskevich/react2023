@@ -19,9 +19,9 @@ function PokemonsList({ data }: PokemonsListProps) {
 
   return (
     <ul className={classes.list}>
-      {data.map(({ id, name, sprites }) => (
+      {data.map(({ name, sprites }) => (
         <Link to={`/${name}`} key={name}>
-          <PokemonCard name={name} img={sprites?.front_default} id={id} />
+          <PokemonCard name={name} img={sprites?.front_default} />
         </Link>
       ))}
     </ul>
