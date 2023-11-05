@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import getPokemons, { PokemonDetails } from '../API/GetPokemons';
 import SearchForm from '../components/SearchForm/SearchForm';
 import Loader from '../components/UI/Loader/Loader';
-import ErrorButton from '../components/UI/ErrorButton/ErrorButton';
+// import ErrorButton from '../components/UI/ErrorButton/ErrorButton';
 import PokemonsList from '../components/PokemonsList/PokemonsList';
 import PokemonDetailsComponent from '../components/PokemonDetailsComponent';
 import classes from './PokemonsPage.module.css';
@@ -13,11 +13,12 @@ function PokemonsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [pokemonsData, setPokemonsData] = useState<PokemonDetails[]>([]);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
   const [inputValue, setinputValue] = useState(
     localStorage.getItem('pokemonName') || ''
   );
+  const [, setSearchParams] = useSearchParams();
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ function PokemonsPage() {
   const handleSubmit = (pokemonName: string) => {
     localStorage.setItem('pokemonName', pokemonName);
     setinputValue(pokemonName);
+    setSearchParams(`?pokemon=${pokemonName}`);
   };
 
   const getPokemonsData = useCallback(
@@ -51,36 +53,37 @@ function PokemonsPage() {
 
   return (
     <>
-      <ErrorButton />
-      <SearchForm onSubmit={handleSubmit} />
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <div className={classes.contentWrapper}>
-          <div className={classes.wrapper}>
+      <div className={classes.mainWrapper}>
+        <SearchForm onSubmit={handleSubmit} />
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <div className={classes.contentWrapper}>
             <PokemonsList data={pokemonsData} />
-            {id && (
-              <>
-                <div
-                  className={classes.hidden}
-                  onClick={handleClose}
-                  onKeyDown={handleClose}
-                  role="button"
-                  tabIndex={0}
-                  aria-label="overlay"
-                />
-                <PokemonDetailsComponent id={id} onClose={handleClose} />
-              </>
+            {!inputValue && (
+              <Pagination
+                setPage={setPage}
+                page={page}
+                setLimit={setLimit}
+                limit={limit}
+                totalPages={totalPages}
+              />
             )}
           </div>
-          <Pagination
-            setPage={setPage}
-            page={page}
-            setLimit={setLimit}
-            limit={limit}
-            totalPages={totalPages}
+        )}
+      </div>
+      {id && (
+        <>
+          <div
+            className={classes.hidden}
+            onClick={handleClose}
+            onKeyDown={handleClose}
+            role="button"
+            tabIndex={0}
+            aria-label="overlay"
           />
-        </div>
+          <PokemonDetailsComponent id={id} onClose={handleClose} />
+        </>
       )}
     </>
   );
