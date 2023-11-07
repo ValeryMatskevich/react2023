@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import PokemonCard from '../PokemonCard/PokemonCard';
 import classes from './PokemonsList.module.css';
-import { PokemonDetails } from '../../API/GetPokemons';
+import { Details } from '../../API/GetPokemons';
 
 interface PokemonsListProps {
-  data: PokemonDetails[];
+  data: Details[];
 }
 
 function PokemonsList({ data }: PokemonsListProps) {

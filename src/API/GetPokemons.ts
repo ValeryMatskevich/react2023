@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-const baseUrl = 'https://pokeapi.co/api/v2/pokemon';
+const BASEURL = 'https://pokeapi.co/api/v2/pokemon';
 
 interface Pokemon {
   name: string;
   url: string;
 }
 
-export interface PokemonDetails {
+export interface Details {
   name: string;
   id: number;
   img: string;
@@ -34,21 +34,22 @@ const getPokemons = async (
   pokemonName?: string,
   page = 1,
   limit = 5
-): Promise<{ pokemonDetails: PokemonDetails[]; count?: number }> => {
+): Promise<{ pokemonDetails: Details[]; count?: number }> => {
   const offset = (page - 1) * limit;
-  const url = pokemonName ? `${baseUrl}/${pokemonName}` : baseUrl;
+  const url = pokemonName ? `${BASEURL}/${pokemonName}` : BASEURL;
 
   try {
     const response = await axios.get(url, {
       params: { limit, offset },
     });
+    const { count } = response.data;
+
     if (pokemonName) {
       const pokemonDetails = [response.data];
-      return { pokemonDetails };
+      return { pokemonDetails, count };
     }
 
     const pokemons: Pokemon[] = response.data.results;
-    const { count } = response.data;
 
     const pokemonDetailsResponses = await Promise.all(
       pokemons.map((pokemon) => axios.get(pokemon.url))

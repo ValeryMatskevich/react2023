@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import getPokemons, { PokemonDetails } from '../API/GetPokemons';
+import getPokemons, { Details } from '../API/GetPokemons';
 import Loader from './UI/Loader/Loader';
 import classes from './PokemonDetailsComponent.module.css';
 
@@ -8,8 +8,8 @@ interface PokemonDetailsProps {
   onClose: () => void;
 }
 
-function PokemonDetailsComponent({ onClose, id }: PokemonDetailsProps) {
-  const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
+function PokemonDetails({ onClose, id }: PokemonDetailsProps) {
+  const [pokemonDetails, setPokemonDetails] = useState<Details[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   async function getPokemon(pokemonName: string) {
@@ -45,4 +45,4 @@ function PokemonDetailsComponent({ onClose, id }: PokemonDetailsProps) {
   );
 }
 
-export default PokemonDetailsComponent;
+export default PokemonDetails;

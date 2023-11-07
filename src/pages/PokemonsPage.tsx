@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import getPokemons, { PokemonDetails } from '../API/GetPokemons';
+import getPokemons, { Details } from '../API/GetPokemons';
 import SearchForm from '../components/SearchForm/SearchForm';
 import Loader from '../components/UI/Loader/Loader';
 // import ErrorButton from '../components/UI/ErrorButton/ErrorButton';
 import PokemonsList from '../components/PokemonsList/PokemonsList';
-import PokemonDetailsComponent from '../components/PokemonDetailsComponent';
+import PokemonDetails from '../components/PokemonDetails';
 import classes from './PokemonsPage.module.css';
 import Pagination from '../components/UI/Pagination/Pagination';
 
 function PokemonsPage() {
   const [isLoading, setIsLoading] = useState(true);
-  const [pokemonsData, setPokemonsData] = useState<PokemonDetails[]>([]);
+  const [pokemonsData, setPokemonsData] = useState<Details[]>([]);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
@@ -82,7 +82,7 @@ function PokemonsPage() {
             tabIndex={0}
             aria-label="overlay"
           />
-          <PokemonDetailsComponent id={id} onClose={handleClose} />
+          <PokemonDetails id={id} onClose={handleClose} />
         </>
       )}
     </>
