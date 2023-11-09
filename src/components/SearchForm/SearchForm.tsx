@@ -1,37 +1,34 @@
 import { useContext, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Input from '../UI/Input/Input';
 import Button from '../UI/Button/Button';
 import classes from './SearchForm.module.css';
 import PokemonsPageContext from '../../context/PokemonsPageContext';
 
-// interface SearchFormProps {
-//   onSubmit: (value: string) => void;
-// }
-
 function SearchForm() {
-  console.log('SearchForm is re-rendering');
-  const [inputValue, setInputValue] = useState(
-    localStorage.getItem('pokemonName') || ''
-  );
-  const { handleSubmit } = useContext(PokemonsPageContext);
+  const { inputValue, setInputValue } = useContext(PokemonsPageContext);
+  const [searchValue, setSearchValue] = useState(inputValue);
+  const [, setSearchParams] = useSearchParams();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+    setSearchValue(event.target.value.toLowerCase());
   };
 
-  function handleFormSubmit(event: React.SyntheticEvent) {
+  function handleSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
-    handleSubmit(inputValue.toLowerCase());
+    localStorage.setItem('pokemonName', inputValue);
+    setInputValue(searchValue);
+    setSearchParams(`?pokemon=${searchValue}`);
   }
 
   return (
     <div className={classes.searchFormWrapper}>
-      <form className={classes.searchForm} onSubmit={handleFormSubmit}>
+      <form className={classes.searchForm} onSubmit={handleSubmit}>
         <Input
           type="search"
           placeholder="Pokemon name"
           onChange={handleInputChange}
-          value={inputValue}
+          value={searchValue}
         />
         <Button text="🔍" />
       </form>

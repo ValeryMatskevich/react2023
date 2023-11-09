@@ -1,17 +1,18 @@
-import { createContext } from 'react';
+import { createContext, Dispatch, SetStateAction } from 'react';
+import { Details } from '../API/GetPokemons';
 
-const PokemonsPageContext = createContext({
-  pokemonsData: [{}],
-  handleSubmit: (pokemonName: string) => {
-    console.log('pokemonName: ', pokemonName);
-  },
-  page: 1,
-  setPage: (value: number) => {
-    console.log('value: ', value);
-  },
-  limit: 10,
-  totalPages: 1,
-  handleClose: () => {},
+interface ContextProps {
+  pokemonsData: Details[];
+  inputValue: string;
+  setPokemonsData: Dispatch<SetStateAction<Details[]>>;
+  setInputValue: Dispatch<SetStateAction<string>>;
+}
+
+const PokemonsPageContext = createContext<ContextProps>({
+  pokemonsData: [],
+  inputValue: '',
+  setPokemonsData: () => {},
+  setInputValue: () => {},
 });
 
 export default PokemonsPageContext;
