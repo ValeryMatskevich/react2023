@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import getPokemons, { Details } from '../API/GetPokemons';
 import SearchForm from '../components/SearchForm/SearchForm';
@@ -8,8 +8,10 @@ import PokemonsList from '../components/PokemonsList/PokemonsList';
 import PokemonDetails from '../components/PokemonDetails';
 import classes from './PokemonsPage.module.css';
 import Pagination from '../components/UI/Pagination/Pagination';
+import PokemonsPageContext from '../context/PokemonsPageContext';
 
 function PokemonsPage() {
+  console.log('PokemonsPage is re-rendering');
   const [isLoading, setIsLoading] = useState(true);
   const [pokemonsData, setPokemonsData] = useState<Details[]>([]);
   const [page, setPage] = useState(1);
@@ -23,11 +25,14 @@ function PokemonsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const handleSubmit = (pokemonName: string) => {
-    localStorage.setItem('pokemonName', pokemonName);
-    setInputValue(pokemonName);
-    setSearchParams(`?pokemon=${pokemonName}`);
-  };
+  const handleSubmit = useCallback(
+    (pokemonName: string) => {
+      localStorage.setItem('pokemonName', pokemonName);
+      setInputValue(pokemonName);
+      setSearchParams(`?pokemon=${pokemonName}`);
+    },
+    [setInputValue, setSearchParams]
+  );
 
   const getPokemonsData = useCallback(
     async (pokemonName: string, pageValue: number, limitValue: number) => {
@@ -47,14 +52,26 @@ function PokemonsPage() {
     getPokemonsData(inputValue, page, limit);
   }, [getPokemonsData, inputValue, page, limit]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     navigate('/');
-  };
+  }, [navigate]);
 
+  const contextValue = useMemo(
+    () => ({
+      pokemonsData,
+      handleSubmit,
+      page,
+      setPage,
+      limit,
+      totalPages,
+      handleClose,
+    }),
+    [pokemonsData, handleSubmit, page, setPage, limit, totalPages, handleClose]
+  );
   return (
-    <>
+    <PokemonsPageContext.Provider value={contextValue}>
       <div className={classes.mainWrapper}>
-        <SearchForm onSubmit={handleSubmit} />
+        <SearchForm />
         {isLoading ? (
           <Loader />
         ) : (
@@ -85,7 +102,7 @@ function PokemonsPage() {
           <PokemonDetails id={id} onClose={handleClose} />
         </>
       )}
-    </>
+    </PokemonsPageContext.Provider>
   );
 }
 

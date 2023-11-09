@@ -1,29 +1,32 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Input from '../UI/Input/Input';
 import Button from '../UI/Button/Button';
 import classes from './SearchForm.module.css';
+import PokemonsPageContext from '../../context/PokemonsPageContext';
 
-interface SearchFormProps {
-  onSubmit: (value: string) => void;
-}
+// interface SearchFormProps {
+//   onSubmit: (value: string) => void;
+// }
 
-function SearchForm({ onSubmit }: SearchFormProps) {
+function SearchForm() {
+  console.log('SearchForm is re-rendering');
   const [inputValue, setInputValue] = useState(
     localStorage.getItem('pokemonName') || ''
   );
+  const { handleSubmit } = useContext(PokemonsPageContext);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
-  function handleSubmit(event: React.SyntheticEvent) {
+  function handleFormSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
-    onSubmit(inputValue.toLowerCase());
+    handleSubmit(inputValue.toLowerCase());
   }
 
   return (
     <div className={classes.searchFormWrapper}>
-      <form className={classes.searchForm} onSubmit={handleSubmit}>
+      <form className={classes.searchForm} onSubmit={handleFormSubmit}>
         <Input
           type="search"
           placeholder="Pokemon name"
