@@ -2,10 +2,11 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import PokemonCard from '../PokemonCard/PokemonCard';
 import classes from './PokemonsList.module.css';
-import PokemonsPageContext from '../../context/PokemonsPageContext';
+
+import DataContext from '../../context/DataContext';
 
 function PokemonsList() {
-  const { pokemonsData } = useContext(PokemonsPageContext);
+  const { pokemonsData } = useContext(DataContext);
 
   if (!pokemonsData.length) {
     return (

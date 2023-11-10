@@ -3,12 +3,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import getPokemons, { Details } from '../API/GetPokemons';
 import SearchForm from '../components/SearchForm/SearchForm';
 import Loader from '../components/UI/Loader/Loader';
-
 import PokemonsList from '../components/PokemonsList/PokemonsList';
 import PokemonDetails from '../components/PokemonDetails';
 import classes from './PokemonsPage.module.css';
 import Pagination from '../components/UI/Pagination/Pagination';
-import PokemonsPageContext from '../context/PokemonsPageContext';
+import InputContext from '../context/InputContext';
+import DataContext from '../context/DataContext';
 
 function PokemonsPage() {
   const [inputValue, setInputValue] = useState(
@@ -39,7 +39,7 @@ function PokemonsPage() {
 
   useEffect(() => {
     getPokemonsData(inputValue, page, limit);
-  }, [getPokemonsData, inputValue, page, limit]);
+  }, [inputValue, page, limit, getPokemonsData]);
 
   const handleClose = () => {
     navigate('/');
@@ -54,15 +54,27 @@ function PokemonsPage() {
     }),
     [pokemonsData, inputValue]
   );
+  const dataContextValue = useMemo(
+    () => ({
+      pokemonsData,
+      setPokemonsData,
+    }),
+    [pokemonsData]
+  );
   return (
-    <PokemonsPageContext.Provider value={contextValue}>
+    <>
       <div className={classes.mainWrapper}>
-        <SearchForm />
+        <InputContext.Provider value={contextValue}>
+          <SearchForm />
+        </InputContext.Provider>
         {isLoading ? (
           <Loader />
         ) : (
           <div className={classes.contentWrapper}>
-            <PokemonsList />
+            <DataContext.Provider value={dataContextValue}>
+              <PokemonsList />
+            </DataContext.Provider>
+
             {!inputValue && (
               <Pagination
                 setPage={setPage}
@@ -88,7 +100,7 @@ function PokemonsPage() {
           <PokemonDetails id={id} onClose={handleClose} />
         </>
       )}
-    </PokemonsPageContext.Provider>
+    </>
   );
 }
 

@@ -1,9 +1,9 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Input from '../UI/Input/Input';
 import Button from '../UI/Button/Button';
 import classes from './SearchForm.module.css';
-import PokemonsPageContext from '../../context/PokemonsPageContext';
+import PokemonsPageContext from '../../context/InputContext';
 
 function SearchForm() {
   const { inputValue, setInputValue } = useContext(PokemonsPageContext);
@@ -16,10 +16,14 @@ function SearchForm() {
 
   function handleSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
-    localStorage.setItem('pokemonName', inputValue);
+    localStorage.setItem('pokemonName', searchValue);
     setInputValue(searchValue);
     setSearchParams(`?pokemon=${searchValue}`);
   }
+
+  useEffect(() => {
+    setSearchParams(`?pokemon=${inputValue}`);
+  }, [setSearchParams, inputValue]);
 
   return (
     <div className={classes.searchFormWrapper}>
