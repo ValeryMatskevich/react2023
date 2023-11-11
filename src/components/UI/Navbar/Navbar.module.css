@@ -1,14 +1,35 @@
 .nav {
   display: flex;
-  justify-content: end;
-  gap: 16px;
-  margin: 0;
+  gap: 15px;
+  padding: 20px;
 }
 
-.nav a {
+.link {
   text-decoration: none;
+  color: #000000;
+  font-size: 20px;
+  transition: transform 0.5s ease;
 }
 
-.nav a.active {
-  background-color: red;
+.link:hover {
+  transform: scale(1.1);
+}
+
+.active {
+  color: #c22e28;
+  animation: color-change 1s infinite;
+}
+
+@keyframes color-change {
+  0% {
+    color: #c22e28;
+  }
+
+  50% {
+    color: #000000;
+  }
+
+  100% {
+    color: #c22e28;
+  }
 }

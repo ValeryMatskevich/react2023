@@ -6,7 +6,7 @@ import Logo from '../components/UI/Logo/Logo';
 export default function RootLayout() {
   return (
     <>
-      <header>
+      <header className={classes.header}>
         <Logo />
         <Navbar />
       </header>
