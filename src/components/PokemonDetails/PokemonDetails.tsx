@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import getPokemons, { Details } from '../API/GetPokemons';
-import Loader from './UI/Loader/Loader';
+import getPokemons, { Details } from '../../API/GetPokemons';
+import Loader from '../UI/Loader/Loader';
 import classes from './PokemonDetails.module.css';
 
 function PokemonDetails() {
@@ -42,10 +42,12 @@ function PokemonDetails() {
         Close
       </button>
       <h2>{pokemonDetails[0].name}</h2>
-      <img
-        src={pokemonDetails[0].sprites.other.dream_world.front_default}
-        alt={pokemonDetails[0].name}
-      />
+      <div className={classes.imgWrapper}>
+        <img
+          src={pokemonDetails[0].sprites.other.dream_world.front_default}
+          alt={pokemonDetails[0].name}
+        />
+      </div>
 
       <p>Height: {pokemonDetails[0].height}</p>
       <p>Weight: {pokemonDetails[0].weight}</p>

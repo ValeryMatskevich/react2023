@@ -8,7 +8,8 @@
   background-color: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 1s ease-in-out;
+  animation: fadeIn 2s ease-in-out;
+  border: 2px solid #000;
 }
 
 @keyframes fadeIn {
@@ -23,11 +24,21 @@
 
 .details h2::first-letter {
   text-transform: uppercase;
+  color: #ff0000;
+  font-size: 1.2em;
 }
 
 .details img {
-  width: 70%;
+  width: 100%;
   height: auto;
+  object-fit: contain;
+}
+
+.details .imgWrapper {
+  width: 70%;
+  padding: 7%;
+  border-radius: 20%;
+  border: 2px solid #000;
 }
 
 .closeButton {
@@ -37,4 +48,5 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }

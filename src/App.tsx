@@ -9,7 +9,7 @@ import RootLayout from './pages/RootLayout';
 import NotFound from './pages/NotFound';
 import Home from './pages/PokemonsPage';
 import ErrorBoundary from './components/ErrorBoundary';
-import PokemonDetails from './components/PokemonDetails';
+import PokemonDetails from './components/PokemonDetails/PokemonDetails';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
