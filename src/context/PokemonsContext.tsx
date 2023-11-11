@@ -1,14 +1,18 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
 import { Details } from '../API/GetPokemons';
 
-interface DataContextProps {
+interface PokemonsContextProps {
+  inputValue: string;
+  setInputValue: Dispatch<SetStateAction<string>>;
   pokemonsData: Details[];
   setPokemonsData: Dispatch<SetStateAction<Details[]>>;
 }
 
-const PokemonsPageContext = createContext<DataContextProps>({
+const PokemonsContext = createContext<PokemonsContextProps>({
+  inputValue: '',
+  setInputValue: () => {},
   pokemonsData: [],
   setPokemonsData: () => {},
 });
 
-export default PokemonsPageContext;
+export default PokemonsContext;

@@ -1,18 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import getPokemons, { Details } from '../API/GetPokemons';
 import Loader from './UI/Loader/Loader';
-import classes from './PokemonDetailsComponent.module.css';
+import classes from './PokemonDetails.module.css';
 
-interface PokemonDetailsProps {
-  id: string;
-  onClose: () => void;
-}
-
-function PokemonDetails({ onClose, id }: PokemonDetailsProps) {
+function PokemonDetails() {
   const [pokemonDetails, setPokemonDetails] = useState<Details[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-  async function getPokemon(pokemonName: string) {
+  const getPokemon = useCallback(async (pokemonName: string) => {
     setIsLoading(false);
     try {
       const pokemon = await getPokemons(pokemonName);
@@ -20,18 +18,28 @@ function PokemonDetails({ onClose, id }: PokemonDetailsProps) {
     } catch (error) {
       setPokemonDetails([]);
     }
-  }
+  }, []);
 
   useEffect(() => {
-    getPokemon(id);
-  }, [id]);
+    if (id) {
+      getPokemon(id);
+    }
+  }, [getPokemon, id]);
+
+  const handleClick = () => {
+    navigate('/');
+  };
 
   return isLoading || !pokemonDetails.length ? (
     <Loader />
   ) : (
     <div className={classes.details}>
-      <button className={classes.closeButton} type="button" onClick={onClose}>
-        Закрыть
+      <button
+        className={classes.closeButton}
+        type="button"
+        onClick={handleClick}
+      >
+        Close
       </button>
       <h2>{pokemonDetails[0].name}</h2>
       <img

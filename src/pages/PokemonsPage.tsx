@@ -1,14 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import getPokemons, { Details } from '../API/GetPokemons';
 import SearchForm from '../components/SearchForm/SearchForm';
 import Loader from '../components/UI/Loader/Loader';
 import PokemonsList from '../components/PokemonsList/PokemonsList';
-import PokemonDetails from '../components/PokemonDetails';
 import classes from './PokemonsPage.module.css';
 import Pagination from '../components/UI/Pagination/Pagination';
-import InputContext from '../context/InputContext';
-import DataContext from '../context/DataContext';
+import Overlay from '../components/UI/Overlay/Overlay';
+import PokemonsContext from '../context/PokemonsContext';
 
 function PokemonsPage() {
   const [inputValue, setInputValue] = useState(
@@ -21,7 +20,6 @@ function PokemonsPage() {
   const [totalPages, setTotalPages] = useState(0);
 
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const getPokemonsData = useCallback(
     async (pokemonName: string, pageValue: number, limitValue: number) => {
@@ -41,11 +39,7 @@ function PokemonsPage() {
     getPokemonsData(inputValue, page, limit);
   }, [inputValue, page, limit, getPokemonsData]);
 
-  const handleClose = () => {
-    navigate('/');
-  };
-
-  const contextValue = useMemo(
+  const pokemonsContextValue = useMemo(
     () => ({
       pokemonsData,
       inputValue,
@@ -54,27 +48,16 @@ function PokemonsPage() {
     }),
     [pokemonsData, inputValue]
   );
-  const dataContextValue = useMemo(
-    () => ({
-      pokemonsData,
-      setPokemonsData,
-    }),
-    [pokemonsData]
-  );
+
   return (
-    <>
+    <PokemonsContext.Provider value={pokemonsContextValue}>
       <div className={classes.mainWrapper}>
-        <InputContext.Provider value={contextValue}>
-          <SearchForm />
-        </InputContext.Provider>
+        <SearchForm />
         {isLoading ? (
           <Loader />
         ) : (
           <div className={classes.contentWrapper}>
-            <DataContext.Provider value={dataContextValue}>
-              <PokemonsList />
-            </DataContext.Provider>
-
+            <PokemonsList />
             {!inputValue && (
               <Pagination
                 setPage={setPage}
@@ -89,18 +72,11 @@ function PokemonsPage() {
       </div>
       {id && (
         <>
-          <div
-            className={classes.hidden}
-            onClick={handleClose}
-            onKeyDown={handleClose}
-            role="button"
-            tabIndex={0}
-            aria-label="overlay"
-          />
-          <PokemonDetails id={id} onClose={handleClose} />
+          <Overlay />
+          <Outlet />
         </>
       )}
-    </>
+    </PokemonsContext.Provider>
   );
 }
 

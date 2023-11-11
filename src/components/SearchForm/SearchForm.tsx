@@ -3,10 +3,10 @@ import { useSearchParams } from 'react-router-dom';
 import Input from '../UI/Input/Input';
 import Button from '../UI/Button/Button';
 import classes from './SearchForm.module.css';
-import PokemonsPageContext from '../../context/InputContext';
+import PokemonsContext from '../../context/PokemonsContext';
 
 function SearchForm() {
-  const { inputValue, setInputValue } = useContext(PokemonsPageContext);
+  const { inputValue, setInputValue } = useContext(PokemonsContext);
   const [searchValue, setSearchValue] = useState(inputValue);
   const [, setSearchParams] = useSearchParams();
 
