@@ -19,7 +19,7 @@ function PokemonsList() {
   return (
     <ul className={classes.list}>
       {pokemonsData.map(({ name, sprites }) => (
-        <Link to={`/${name}`} key={name}>
+        <Link to={`/${name}`} key={name} data-testid="link">
           <PokemonCard name={name} img={sprites?.front_default} />
         </Link>
       ))}

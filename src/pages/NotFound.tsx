@@ -3,8 +3,8 @@ import classes from './NotFound.module.css';
 
 export default function NotFound() {
   return (
-    <div className={classes.notFound}>
-      <h2>Страница не найдена!</h2>
+    <div className={classes.notFound} data-testid="not-found">
+      <h2>Not found</h2>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia alias
         cupiditate ad nostrum doloribus iste tempora quisquam excepturi

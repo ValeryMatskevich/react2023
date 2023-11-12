@@ -33,7 +33,7 @@ function PokemonDetails() {
   return isLoading || !pokemonDetails.length ? (
     <Loader />
   ) : (
-    <div className={classes.details}>
+    <div className={classes.details} data-testid="details">
       <button
         className={classes.closeButton}
         type="button"
