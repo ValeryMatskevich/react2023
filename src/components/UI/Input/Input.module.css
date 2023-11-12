@@ -1,0 +1,14 @@
+.searchInput {
+  border: none;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 20px;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+/* @media screen and (max-width: 480px) {
+  .searchInput {
+    width: 200px;
+  }
+} */

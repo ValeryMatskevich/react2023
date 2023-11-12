@@ -1,0 +1,45 @@
+.card {
+  background-color: #fffbf5;
+  border-radius: 25px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  transition: all 0.5s ease;
+  list-style-type: none;
+}
+
+.card:hover {
+  transform: scale(1.1);
+}
+
+.card img {
+  transition: all 0.5s ease;
+}
+
+.card:hover img {
+  transform: rotate(10deg);
+}
+
+.name {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.name::first-letter {
+  text-transform: uppercase;
+}
+
+.img {
+  width: 150px;
+  height: 150px;
+  margin: auto;
+  display: block;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
+}
