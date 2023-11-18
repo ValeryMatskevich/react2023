@@ -16,3 +16,18 @@
   align-items: center;
   margin-bottom: 15px;
 }
+
+.searchInput {
+  border: none;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 20px;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.searchButton {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}

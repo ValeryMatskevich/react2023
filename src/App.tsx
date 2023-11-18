@@ -9,13 +9,12 @@ import RootLayout from './pages/RootLayout';
 import NotFound from './pages/NotFound';
 import Home from './pages/PokemonsPage';
 import ErrorBoundary from './components/ErrorBoundary';
-import PokemonDetails from './components/PokemonDetails/PokemonDetails';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />} errorElement={<ErrorBoundary />}>
       <Route path="/" element={<Home />}>
-        <Route path="/:id" element={<PokemonDetails />} />
+        <Route path="/:id" element={<Home />} />
       </Route>
 
       <Route path="about" element={<About />} />
