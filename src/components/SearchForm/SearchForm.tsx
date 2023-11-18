@@ -1,40 +1,37 @@
-import { useContext, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import Input from '../UI/Input/Input';
-import Button from '../UI/Button/Button';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import classes from './SearchForm.module.css';
-import PokemonsContext from '../../context/PokemonsContext';
+import useActions from '../../hooks/useActions';
+import { RootState } from '../../store/store';
 
 function SearchForm() {
-  const { inputValue, setInputValue } = useContext(PokemonsContext);
-  const [searchValue, setSearchValue] = useState(inputValue);
-  const [, setSearchParams] = useSearchParams();
+  const { searchValue } = useSelector((state: RootState) => state.search);
+  const { setSearchValue } = useActions();
+
+  const [inputValue, setInputValue] = useState(searchValue);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value.toLowerCase());
+    setInputValue(event.target.value.toLowerCase());
   };
 
   function handleSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
-    localStorage.setItem('pokemonName', searchValue);
-    setInputValue(searchValue);
-    setSearchParams(`?pokemon=${searchValue}`);
+    setSearchValue(inputValue);
   }
-
-  useEffect(() => {
-    setSearchParams(`?pokemon=${inputValue}`);
-  }, [setSearchParams, inputValue]);
 
   return (
     <div className={classes.searchFormWrapper}>
       <form className={classes.searchForm} onSubmit={handleSubmit}>
-        <Input
+        <input
+          className={classes.searchInput}
           type="search"
           placeholder="Pokemon name"
           onChange={handleInputChange}
-          value={searchValue}
+          value={inputValue}
         />
-        <Button text="🔍" />
+        <button className={classes.searchButton} type="submit">
+          🔍
+        </button>
       </form>
     </div>
   );
