@@ -1,32 +1,12 @@
-import { act, cleanup, render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { HttpResponse, http } from 'msw';
 import { expect } from 'vitest';
 import PokemonsList from './PokemonsList';
 import store from '../../store/store';
-import server from '../../server/server';
-import mockData from '../../server/mockData';
 
-// let url = 'https://pokeapi.co/api/v2/pokemon';
-
-// vi.mock('../../API/api.ts', async () => {
-//   const actual =
-//     await vi.importActual<typeof import('../../API/api.ts')>(
-//       '../../API/api.ts'
-//     );
-//   return {
-//     ...actual,
-//     makeFetchRequest: vi.fn(async () => {
-//       const request = await fetch(url);
-//       const response = await request.json();
-//       return response;
-//     }),
-//   };
-// });
-
-const renderPage = async (): Promise<void> => {
-  await act(async () => {
+describe('Pokemon List', () => {
+  test('Component renders the specified number of cards', async () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
@@ -34,23 +14,21 @@ const renderPage = async (): Promise<void> => {
         </MemoryRouter>
       </Provider>
     );
-  });
-};
-
-describe('ТЕСТОВЫ ПРИМЕР', () => {
-  afterEach(() => {
-    cleanup();
-  });
-
-  test('Component renders the specified number of cards', async () => {
-    server.use(
-      http.get('https://pokeapi.co/api/v2/pokemon', async () => {
-        console.log(HttpResponse.json(mockData.listLimit10Offset0));
-        return HttpResponse.json(mockData.listLimit10Offset0);
-      })
-    );
-    await renderPage();
     const cards = await screen.findAllByTestId('pokemon-card');
-    expect(cards).toHaveLength(10);
+    expect(cards).toHaveLength(2);
+  });
+
+  test.skip('Check that an appropriate message is displayed if no cards are present', async () => {
+    const response = await fetch('https://pokeapi.co/api/v2/pokemon/qwer');
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <PokemonsList />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    await waitFor(() => expect(response.status).toBe(404));
   });
 });

@@ -1,11 +1,13 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
+export const initialState = {
+  searchValue: localStorage.getItem('pokemonName') || '',
+};
+
 const searchSlice = createSlice({
   name: 'search',
-  initialState: {
-    searchValue: localStorage.getItem('pokemonName') || '',
-  },
+  initialState,
   reducers: {
     setSearchValue: (state, { payload: searchValue }) => {
       state.searchValue = searchValue;
