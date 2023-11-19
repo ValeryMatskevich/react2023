@@ -6,7 +6,8 @@ import { RootState } from '../../../store/store';
 
 function Pagination() {
   const { limit, page } = useSelector((state: RootState) => state.pagination);
-  const { data } = usePokemonListQuery({ limit, page });
+
+  const { data } = usePokemonListQuery({ limit, offset: (page - 1) * limit });
   const { setLimit, setPage } = useActions();
 
   let totalPages;

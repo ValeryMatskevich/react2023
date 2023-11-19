@@ -4,15 +4,15 @@ import { createSlice } from '@reduxjs/toolkit';
 const loadingFlagsSlice = createSlice({
   name: 'loadingFlags',
   initialState: {
-    pokemonList: false,
-    pokemonDetails: false,
+    pokemonListLoading: false,
+    pokemonDetailsLoading: false,
   },
   reducers: {
     setPokemonListLoading: (state, { payload: pokemonList }) => {
-      state.pokemonList = pokemonList;
+      state.pokemonListLoading = pokemonList;
     },
     setPokemonDetailsLoading: (state, { payload: pokemonDetails }) => {
-      state.pokemonDetails = pokemonDetails;
+      state.pokemonDetailsLoading = pokemonDetails;
     },
   },
 });

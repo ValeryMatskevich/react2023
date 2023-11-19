@@ -5,14 +5,14 @@ export interface Pokemon {
   url: string;
 }
 
-interface PokemonListResponse {
+export interface PokemonListResponse {
   count: number;
   next: string;
   previous: string;
   results: Pokemon[];
 }
 
-interface Details {
+export interface Details {
   name: string;
   id: number;
   sprites: {
@@ -34,16 +34,12 @@ const api = createApi({
   endpoints: (build) => ({
     pokemonList: build.query<
       PokemonListResponse,
-      { limit: number; page: number }
+      { limit: number; offset: number }
     >({
-      query({ limit, page }) {
-        const offset = (page - 1) * limit;
+      query(params) {
         return {
           url: 'pokemon',
-          params: {
-            limit,
-            offset,
-          },
+          params,
           method: 'GET',
         };
       },

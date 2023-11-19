@@ -14,7 +14,7 @@ function PokemonDetails({ name }: PokemonDetailsProps) {
   const { data: pokemonDetails, isLoading } = usePokemonDetailsQuery(name);
   const { setPokemonDetailsLoading } = useActions();
 
-  const handleClick = () => {
+  const handleGoBack = () => {
     navigate('/');
   };
 
@@ -31,7 +31,7 @@ function PokemonDetails({ name }: PokemonDetailsProps) {
       <button
         className={classes.closeButton}
         type="button"
-        onClick={handleClick}
+        onClick={handleGoBack}
       >
         Close
       </button>

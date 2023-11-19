@@ -15,15 +15,18 @@ import { RootState } from '../../store/store';
 function PokemonsList() {
   const { limit, page } = useSelector((state: RootState) => state.pagination);
   const { searchValue } = useSelector((state: RootState) => state.search);
+  const { pokemonListLoading } = useSelector(
+    (state: RootState) => state.loading
+  );
   const { setPokemonListLoading } = useActions();
 
   const { data: pokemonsData, isLoading: listLoading } = usePokemonListQuery(
     {
       limit,
-      page,
+      offset: (page - 1) * limit,
     },
     {
-      skip: !!searchValue,
+      skip: Boolean(searchValue),
     }
   );
 
@@ -34,13 +37,14 @@ function PokemonsList() {
   } = usePokemonDetailsQuery(searchValue, {
     skip: !searchValue,
   });
+
   const isLoading = listLoading || detailsLoading;
 
   useEffect(() => {
     setPokemonListLoading(isLoading);
   }, [isLoading, setPokemonListLoading]);
 
-  if (isLoading) {
+  if (pokemonListLoading) {
     return <Loader />;
   }
 
@@ -55,23 +59,22 @@ function PokemonsList() {
 
   return (
     <ul className={classes.list}>
-      {pokemonData && (
-        <Link to={`/${pokemonData.name}`} data-testid="link">
+      {pokemonData && searchValue && (
+        <Link to={`/${pokemonData.name}/details`} data-testid="link">
           <PokemonCard name={pokemonData.name} />
         </Link>
       )}
       {pokemonsData &&
+        !searchValue &&
         pokemonsData.results.map((pokemon: Pokemon) => (
-          <Link to={`/${pokemon.name}`} key={pokemon.name} data-testid="link">
+          <Link
+            to={`/${pokemon.name}/details`}
+            key={pokemon.name}
+            data-testid="link"
+          >
             <PokemonCard name={pokemon.name} />
           </Link>
         ))}
-      {!pokemonData && !pokemonsData && (
-        <div className={classes.errorWrapper}>
-          <h1>The name of the Pokemon was entered incorrectly.</h1>
-          <p>Try again.</p>
-        </div>
-      )}
     </ul>
   );
 }

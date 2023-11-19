@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, SyntheticEvent, ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
 import classes from './SearchForm.module.css';
 import useActions from '../../hooks/useActions';
@@ -10,11 +10,11 @@ function SearchForm() {
 
   const [inputValue, setInputValue] = useState(searchValue);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value.toLowerCase());
   };
 
-  function handleSubmit(event: React.SyntheticEvent) {
+  function handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
     setSearchValue(inputValue);
   }

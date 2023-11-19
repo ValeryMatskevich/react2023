@@ -9,7 +9,7 @@ const searchSlice = createSlice({
   reducers: {
     setSearchValue: (state, { payload: searchValue }) => {
       state.searchValue = searchValue;
-      localStorage.setItem('search', searchValue);
+      localStorage.setItem('pokemonName', searchValue);
     },
   },
 });
