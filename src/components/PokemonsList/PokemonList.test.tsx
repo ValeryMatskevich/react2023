@@ -1,102 +1,56 @@
-/* eslint-disable react/jsx-no-constructed-context-values */
-import { render, screen } from '@testing-library/react';
-import { expect } from 'vitest';
+import { act, cleanup, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { HttpResponse, http } from 'msw';
+import { expect } from 'vitest';
 import PokemonsList from './PokemonsList';
-import PokemonsContext from '../../context/PokemonsContext';
+import store from '../../store/store';
+import server from '../../server/server';
+import mockData from '../../server/mockData';
 
-// vi.mock('../../API/GetPokemons.ts', () => {
-//   const getPokemons = vi.fn(() => {
-//     return {
-//       pokemonsData: [
-//         {
-//           name: 'bulbasaur',
-//           sprites: {
-//             front_female: 'https://pokeapi.co/api/v2/pokemon/1/',
-//             other: {
-//               dream_world: {
-//                 front_default: 'https://pokeapi.co/api/v2/pokemon/1/',
-//               },
-//             },
-//           },
-//         },
-//         {
-//           name: 'bulbasaur',
-//           sprites: {
-//             front_female: 'https://pokeapi.co/api/v2/pokemon/1/',
-//             other: {
-//               dream_world: {
-//                 front_default: 'https://pokeapi.co/api/v2/pokemon/1/',
-//               },
-//             },
-//           },
-//         },
-//       ],
-//       count: 2,
-//     };
-//   });
-//   return { getPokemons };
+// let url = 'https://pokeapi.co/api/v2/pokemon';
+
+// vi.mock('../../API/api.ts', async () => {
+//   const actual =
+//     await vi.importActual<typeof import('../../API/api.ts')>(
+//       '../../API/api.ts'
+//     );
+//   return {
+//     ...actual,
+//     makeFetchRequest: vi.fn(async () => {
+//       const request = await fetch(url);
+//       const response = await request.json();
+//       return response;
+//     }),
+//   };
 // });
 
-describe('PokemonsList', () => {
-  test('renders the specified number of cards', async () => {
-    const mockData = {
-      setInputValue: () => {},
-      inputValue: '',
-      setPokemonsData: () => {},
-      pokemonsData: [
-        {
-          id: 1,
-          weight: '1',
-          height: '1',
-          name: 'Pikachu',
-          sprites: {
-            front_default: 'url',
-            other: { dream_world: { front_default: 'url' } },
-          },
-        },
-        {
-          id: 2,
-          weight: '2',
-          height: '2',
-          name: 'Bulbasaur',
-          sprites: {
-            front_default: 'url',
-            other: { dream_world: { front_default: 'url' } },
-          },
-        },
-      ],
-    };
-
+const renderPage = async (): Promise<void> => {
+  await act(async () => {
     render(
-      <MemoryRouter>
-        <PokemonsContext.Provider value={mockData}>
+      <Provider store={store}>
+        <MemoryRouter>
           <PokemonsList />
-        </PokemonsContext.Provider>
-      </MemoryRouter>
+        </MemoryRouter>
+      </Provider>
     );
+  });
+};
 
-    const cards = await screen.findAllByTestId('pokemon-card');
-    expect(cards).toHaveLength(mockData.pokemonsData.length);
+describe('ТЕСТОВЫ ПРИМЕР', () => {
+  afterEach(() => {
+    cleanup();
   });
 
-  test('Check that an appropriate message is displayed if no cards are present', async () => {
-    render(
-      <PokemonsContext.Provider
-        value={{
-          setInputValue: () => {},
-          inputValue: '',
-          setPokemonsData: () => {},
-          pokemonsData: [],
-        }}
-      >
-        <PokemonsList />
-      </PokemonsContext.Provider>
+  test('Component renders the specified number of cards', async () => {
+    server.use(
+      http.get('https://pokeapi.co/api/v2/pokemon', async () => {
+        console.log(HttpResponse.json(mockData.listLimit10Offset0));
+        return HttpResponse.json(mockData.listLimit10Offset0);
+      })
     );
-
-    const message = await screen.findByText(
-      'The name of the Pokemon was entered incorrectly.'
-    );
-    expect(message).toBeInTheDocument();
+    await renderPage();
+    const cards = await screen.findAllByTestId('pokemon-card');
+    expect(cards).toHaveLength(10);
   });
 });
