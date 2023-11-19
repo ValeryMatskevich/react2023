@@ -1,4 +1,6 @@
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import classes from './Pagination.module.css';
 import useActions from '../../../hooks/useActions';
 import { usePokemonListQuery } from '../../../API/api';
@@ -9,6 +11,12 @@ function Pagination() {
 
   const { data } = usePokemonListQuery({ limit, offset: (page - 1) * limit });
   const { setLimit, setPage } = useActions();
+
+  const [, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    setSearchParams(`?page=${page}`);
+  }, [setSearchParams, page]);
 
   let totalPages;
   if (data) {
@@ -25,6 +33,7 @@ function Pagination() {
             setPage(page - 1);
           }}
           disabled={page === 1}
+          data-testid="previous"
         >
           Previous
         </button>
@@ -35,6 +44,7 @@ function Pagination() {
             setPage(page + 1);
           }}
           disabled={page === totalPages}
+          data-testid="next"
         >
           Next
         </button>
