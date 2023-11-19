@@ -5,15 +5,9 @@ export default function NotFound() {
   return (
     <div className={classes.notFound} data-testid="not-found">
       <h2>Not found</h2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia alias
-        cupiditate ad nostrum doloribus iste tempora quisquam excepturi
-        repellat, fugit cumque dolore magni possimus inventore neque provident!
-        Sunt, quo eos?
-      </p>
 
       <p>
-        Вернуться на <Link to="/">Главную страницу</Link>.
+        Go back to <Link to="/">Home page</Link>.
       </p>
     </div>
   );

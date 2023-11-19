@@ -1,41 +1,39 @@
+import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import classes from './Pagination.module.css';
+import useActions from '../../../hooks/useActions';
+import { usePokemonListQuery } from '../../../API/api';
+import { RootState } from '../../../store/store';
 
-interface PaginationProps {
-  page: number;
-  limit: number;
-  totalPages: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
-  setLimit: React.Dispatch<React.SetStateAction<number>>;
-}
+function Pagination() {
+  const { limit, page } = useSelector((state: RootState) => state.pagination);
 
-function Pagination({
-  totalPages,
-  setPage,
-  page,
-  limit,
-  setLimit,
-}: PaginationProps) {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { data } = usePokemonListQuery({ limit, offset: (page - 1) * limit });
+  const { setLimit, setPage } = useActions();
+
+  const [, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     setSearchParams(`?page=${page}`);
   }, [setSearchParams, page]);
 
-  useEffect(() => {
-    const newPage = searchParams.get('page');
-    if (newPage) setPage(Number(newPage));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  let totalPages;
+  if (data) {
+    const { count } = data;
+    totalPages = Math.ceil(count / limit);
+  }
 
   return (
     <div className={classes.pagination}>
       <div className={classes.paginationButtons}>
         <button
           type="button"
-          onClick={() => setPage((prev) => prev - 1)}
+          onClick={() => {
+            setPage(page - 1);
+          }}
           disabled={page === 1}
+          data-testid="previous"
         >
           Previous
         </button>
@@ -43,9 +41,10 @@ function Pagination({
         <button
           type="button"
           onClick={() => {
-            setPage((prev) => prev + 1);
+            setPage(page + 1);
           }}
           disabled={page === totalPages}
+          data-testid="next"
         >
           Next
         </button>
@@ -64,8 +63,6 @@ function Pagination({
           <option value={20}>20</option>
           <option value={30}>30</option>
           <option value={40}>40</option>
-          <option value={50}>50</option>
-          <option value={60}>60</option>
         </select>
       </div>
     </div>
