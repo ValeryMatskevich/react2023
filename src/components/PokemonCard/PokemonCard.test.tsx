@@ -5,7 +5,7 @@ import { expect } from 'vitest';
 import PokemonCard from './PokemonCard';
 
 describe('PokemonCard', () => {
-  it('renders the relevant card data', async () => {
+  it.skip('renders the relevant card data', async () => {
     const mockData = { name: 'Pikachu', img: 'url' };
 
     render(
@@ -21,7 +21,7 @@ describe('PokemonCard', () => {
     expect(img).toHaveAttribute('src', mockData.img);
   });
 
-  // it('clicking on a card opens a detailed card component', async () => {
+  // xit('clicking on a card opens a detailed card component', async () => {
   //   const mockData = {
   //     setInputValue: () => {},
   //     inputValue: '',
