@@ -32,6 +32,7 @@ function PokemonDetails({ name }: PokemonDetailsProps) {
         className={classes.closeButton}
         type="button"
         onClick={handleGoBack}
+        data-testid="close"
       >
         Close
       </button>
