@@ -1,7 +1,5 @@
-export default function About() {
-  return (
-    <div>
-      <h2>About Us</h2>
-    </div>
-  );
+import About from '@/components/screens/About/About';
+
+export default function AboutPage() {
+  return <About />;
 }

@@ -1,11 +1,14 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
+import Image from 'next/image';
 import logo from '../../../assets/logo.jpg';
-import classes from './Logo.module.css';
+import styles from './Logo.module.css';
 
 function Logo() {
   return (
-    <Link to="/">
-      <img className={classes.logo} src={logo} alt="Logo" />
+    <Link href="/">
+      <div className={styles.logo}>
+        <Image src={logo} alt="Logo" />
+      </div>
     </Link>
   );
 }

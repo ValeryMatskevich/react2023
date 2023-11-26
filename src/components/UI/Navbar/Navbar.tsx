@@ -1,25 +1,20 @@
-import { NavLink } from 'react-router-dom';
-import classes from './Navbar.module.css';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import styles from './Navbar.module.css';
 
 export default function Navbar() {
+  const { pathname } = useRouter();
   return (
-    <nav className={classes.nav}>
-      <NavLink
-        to="/"
-        className={({ isActive }) =>
-          `${classes.link} ${isActive ? classes.active : ''}`
-        }
-      >
+    <nav className={styles.nav}>
+      <Link href="/" className={pathname === '/' ? styles.active : ''}>
         Home
-      </NavLink>
-      <NavLink
-        to="/about"
-        className={({ isActive }) =>
-          `${classes.link} ${isActive ? classes.active : ''}`
-        }
+      </Link>
+      <Link
+        href="/about"
+        className={pathname === '/about' ? styles.active : ''}
       >
         About
-      </NavLink>
+      </Link>
     </nav>
   );
 }

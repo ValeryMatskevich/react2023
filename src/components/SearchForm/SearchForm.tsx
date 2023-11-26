@@ -1,14 +1,13 @@
 import { useState, SyntheticEvent, ChangeEvent } from 'react';
-import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import classes from './SearchForm.module.css';
-import useActions from '../../hooks/useActions';
-import { RootState } from '../../store/store';
 
 function SearchForm() {
-  const { searchValue } = useSelector((state: RootState) => state.search);
-  const { setSearchValue } = useActions();
+  // const { searchValue } = useSelector((state: RootState) => state.search);
+  // const { setSearchValue } = useActions();
+  const router = useRouter();
 
-  const [inputValue, setInputValue] = useState(searchValue);
+  const [inputValue, setInputValue] = useState('');
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value.toLowerCase());
@@ -16,7 +15,7 @@ function SearchForm() {
 
   function handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
-    setSearchValue(inputValue);
+    router.push(`/search?query=${inputValue}`);
   }
 
   return (

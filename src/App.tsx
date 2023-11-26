@@ -4,11 +4,11 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom';
-import About from './pages/About';
-import RootLayout from './pages/RootLayout';
-import Home from './pages/PokemonsPage';
+import About from './components/screens/About/About';
+import RootLayout from './components/screens/RootLayout';
+import Home from './components/screens/Home/Home';
 import ErrorBoundary from './components/ErrorBoundary';
-import NotFound from './pages/NotFound';
+import NotFound from './components/screens/NotFound/NotFound';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

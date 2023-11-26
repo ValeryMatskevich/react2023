@@ -1,12 +1,12 @@
-.logo {
-  height: 60px;
-  width: auto;
+.logo > img {
+  width: 60px;
+  height: auto;
   margin: 10px;
   border-radius: 50%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease-in-out;
 }
 
-.logo:hover {
+.logo > img:hover {
   transform: scale(1.1);
 }

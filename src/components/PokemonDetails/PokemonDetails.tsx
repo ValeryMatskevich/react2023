@@ -1,4 +1,5 @@
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import Loader from '../UI/Loader/Loader';
 import classes from './PokemonDetails.module.css';
@@ -10,13 +11,14 @@ interface PokemonDetailsProps {
 }
 
 function PokemonDetails({ name }: PokemonDetailsProps) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const { replace } = useRouter();
   const { data: pokemonDetails, isLoading } = usePokemonDetailsQuery(name);
   const { setPokemonDetailsLoading } = useActions();
 
-  const handleGoBack = () => {
-    navigate('/');
-  };
+  // const handleGoBack = () => {
+  //   navigate('/');
+  // };
 
   useEffect(() => {
     setPokemonDetailsLoading(isLoading);
@@ -31,7 +33,7 @@ function PokemonDetails({ name }: PokemonDetailsProps) {
       <button
         className={classes.closeButton}
         type="button"
-        onClick={handleGoBack}
+        onClick={() => replace('/')}
         data-testid="close"
       >
         Close

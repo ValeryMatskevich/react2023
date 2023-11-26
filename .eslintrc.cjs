@@ -9,6 +9,7 @@ module.exports = {
     'airbnb',
     'airbnb-typescript',
     'airbnb/hooks',
+    'next',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier',
@@ -24,7 +25,13 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json',
   },
-  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'prettier'],
+  plugins: [
+    '@typescript-eslint',
+    'react',
+    'react-hooks',
+    'prettier',
+    '@next/next',
+  ],
   rules: {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
@@ -41,6 +48,14 @@ module.exports = {
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/prefer-stateless-function': 'off',
+    '@next/next/no-img-element': 'off',
+    'react/function-component-definition': [
+      'error',
+      {
+        namedComponents: 'function-declaration',
+        unnamedComponents: 'arrow-function',
+      },
+    ],
   },
   settings: {
     react: {
