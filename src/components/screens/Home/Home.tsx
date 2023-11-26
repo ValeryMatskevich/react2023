@@ -13,7 +13,7 @@ export default function Home() {
   const { page, limit, details } = router.query;
 
   useEffect(() => {
-    if (!page || !limit) {
+    if (!page || !limit || !details) {
       router.push({
         pathname: router.pathname,
         query: { page: '1', limit: '10', details: '0' },
