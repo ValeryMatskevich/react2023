@@ -11,8 +11,6 @@ export default function HomePage() {
 export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps((store) => async (context) => {
     const offset = context.query.offset || '0';
-    console.log('MAMA: ', offset);
-    const page = context.query.page || '1';
     const limit = context.query.limit || '10';
     const name = context.params?.name || '';
 
@@ -20,7 +18,6 @@ export const getServerSideProps: GetServerSideProps =
       pokemonList.initiate({
         offset: offset as string,
         limit: limit as string,
-        page: page as string,
       })
     );
     if (name) {

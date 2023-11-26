@@ -9,23 +9,13 @@ import {
 import classes from './PokemonsList.module.css';
 
 function PokemonsList() {
-  // const { limit, page } = useSelector((state: RootState) => state.pagination);
-  // const { searchValue } = useSelector((state: RootState) => state.search);
-  // const { pokemonListLoading } = useSelector(
-  //   (state: RootState) => state.loading
-  // );
   const router = useRouter();
-
-  const { limit, name, offset, page } = router.query;
-
-  // const { page } = router.pathname;
+  const { page, limit, name } = router.query;
 
   const { data: pokemonsData } = usePokemonListQuery(
     {
       limit: limit as string,
-      offset: offset as string,
-      page: page as string,
-      // offset: (page - 1) * limit,
+      offset: ((Number(page) - 1) * Number(limit)).toString(),
     },
     {
       skip: Boolean(name),
@@ -48,7 +38,13 @@ function PokemonsList() {
   return (
     <ul className={classes.list}>
       {pokemonData && name && (
-        <Link href={`/${pokemonData.name}/details`} data-testid="link">
+        <Link
+          href={{
+            pathname: router.pathname,
+            query: { ...router.query, details: pokemonData.name },
+          }}
+          data-testid="link"
+        >
           <PokemonCard name={pokemonData.name} />
         </Link>
       )}
@@ -56,7 +52,10 @@ function PokemonsList() {
         !name &&
         pokemonsData.results.map((pokemon: Pokemon) => (
           <Link
-            href={`/${pokemon.name}/details`}
+            href={{
+              pathname: router.pathname,
+              query: { ...router.query, details: pokemon.name },
+            }}
             key={pokemon.name}
             data-testid="link"
           >

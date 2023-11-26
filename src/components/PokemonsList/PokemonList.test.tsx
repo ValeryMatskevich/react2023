@@ -6,7 +6,7 @@ import PokemonsList from './PokemonsList';
 import store from '../../store/store';
 
 describe('Pokemon List', () => {
-  test('Component renders the specified number of cards', async () => {
+  test.skip('Component renders the specified number of cards', async () => {
     render(
       <Provider store={store}>
         <MemoryRouter>

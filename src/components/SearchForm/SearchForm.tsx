@@ -15,7 +15,7 @@ function SearchForm() {
 
   function handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
-    router.push(`/search?query=${inputValue}`);
+    router.push(`/?name=${inputValue}&details=0`);
   }
 
   return (

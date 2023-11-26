@@ -4,15 +4,11 @@ import { usePokemonListQuery } from '../../../API/api';
 
 function Pagination() {
   const router = useRouter();
-  console.log('router: ', router);
-  const { limit, page, offset } = router.query;
-
-  const cardsOnPage = ((Number(page) - 1) * Number(limit)).toString();
+  const { limit, page } = router.query;
 
   const { data } = usePokemonListQuery({
     limit: limit as string,
-    page: page as string,
-    offset: cardsOnPage,
+    offset: ((Number(page) - 1) * Number(limit)).toString(),
   });
 
   let totalPages;
@@ -28,7 +24,10 @@ function Pagination() {
           type="button"
           onClick={() => {
             const newPage = (Number(page) - 1).toString();
-            router.push(`/?page=${newPage}&limit=${limit}&offset=${offset}`);
+            router.push({
+              pathname: router.pathname,
+              query: { ...router.query, page: newPage },
+            });
           }}
           disabled={Number(page) === 1}
           data-testid="previous"
@@ -40,7 +39,10 @@ function Pagination() {
           type="button"
           onClick={() => {
             const newPage = (Number(page) + 1).toString();
-            router.push(`/?page=${newPage}&limit=${limit}&offset=${offset}`);
+            router.push({
+              pathname: router.pathname,
+              query: { ...router.query, page: newPage },
+            });
           }}
           disabled={Number(page) === totalPages}
           data-testid="next"
@@ -54,13 +56,14 @@ function Pagination() {
         <select
           value={limit}
           onChange={(e) => {
-            router.push(`/?page=1&limit=${e.target.value}&offset=${offset}`);
+            router.push({
+              pathname: router.pathname,
+              query: { ...router.query, page: '1', limit: e.target.value },
+            });
           }}
         >
           <option value={10}>10</option>
           <option value={20}>20</option>
-          <option value={30}>30</option>
-          <option value={40}>40</option>
         </select>
       </div>
     </div>

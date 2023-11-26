@@ -41,15 +41,14 @@ const api = createApi({
   endpoints: (build) => ({
     pokemonList: build.query<
       PokemonListResponse,
-      { limit: string; offset: string; page: string }
+      { limit: string; offset: string }
     >({
-      query({ limit = 10, offset = 30, page = 1 }) {
+      query({ limit = 10, offset = 30 }) {
         return {
           url: 'pokemon',
           params: {
             limit,
             offset,
-            page,
           },
           method: 'GET',
         };
