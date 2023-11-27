@@ -1,16 +1,24 @@
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import classes from './Overlay.module.css';
 
 function Overlay() {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   return (
     <div
       className={classes.hidden}
-      onClick={() => navigate('/')}
+      onClick={() => {
+        router.push({
+          pathname: router.pathname,
+          query: { ...router.query, details: '0' },
+        });
+      }}
       onKeyDown={(event) => {
         if (event.key === 'Enter' || event.key === ' ') {
-          navigate('/');
+          router.push({
+            pathname: router.pathname,
+            query: { ...router.query, details: '0' },
+          });
         }
       }}
       role="presentation"

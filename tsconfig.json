@@ -1,8 +1,12 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": false,
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "allowJs": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
@@ -16,17 +20,32 @@
     "isolatedModules": true,
     "noImplicitAny": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "incremental": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
   },
-  "include": ["vite.config.ts", ".eslintrc.cjs", "src"],
+  "include": [
+    "vite.config.ts",
+    "next-env.d.ts",
+    ".eslintrc.cjs",
+    "src",
+    "src/pages/api"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"
     }
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

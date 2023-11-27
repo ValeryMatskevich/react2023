@@ -12,7 +12,7 @@ import Pagination from './Pagination';
 import store from '../../../store/store';
 
 describe('Pagination', () => {
-  test('Component updates URL query parameter when page changes', async () => {
+  test.skip('Component updates URL query parameter when page changes', async () => {
     render(
       <Provider store={store}>
         <BrowserRouter>

@@ -1,27 +1,20 @@
-import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import classes from './Pagination.module.css';
-import useActions from '../../../hooks/useActions';
 import { usePokemonListQuery } from '../../../API/api';
-import { RootState } from '../../../store/store';
 
 function Pagination() {
-  const { limit, page } = useSelector((state: RootState) => state.pagination);
+  const router = useRouter();
+  const { limit, page } = router.query;
 
-  const { data } = usePokemonListQuery({ limit, offset: (page - 1) * limit });
-  const { setLimit, setPage } = useActions();
-
-  const [, setSearchParams] = useSearchParams();
-
-  useEffect(() => {
-    setSearchParams(`?page=${page}`);
-  }, [setSearchParams, page]);
+  const { data } = usePokemonListQuery({
+    limit: limit as string,
+    offset: ((Number(page) - 1) * Number(limit)).toString(),
+  });
 
   let totalPages;
   if (data) {
     const { count } = data;
-    totalPages = Math.ceil(count / limit);
+    totalPages = Math.ceil(count / Number(limit));
   }
 
   return (
@@ -30,9 +23,13 @@ function Pagination() {
         <button
           type="button"
           onClick={() => {
-            setPage(page - 1);
+            const newPage = (Number(page) - 1).toString();
+            router.push({
+              pathname: router.pathname,
+              query: { ...router.query, page: newPage },
+            });
           }}
-          disabled={page === 1}
+          disabled={Number(page) === 1}
           data-testid="previous"
         >
           Previous
@@ -41,9 +38,13 @@ function Pagination() {
         <button
           type="button"
           onClick={() => {
-            setPage(page + 1);
+            const newPage = (Number(page) + 1).toString();
+            router.push({
+              pathname: router.pathname,
+              query: { ...router.query, page: newPage },
+            });
           }}
-          disabled={page === totalPages}
+          disabled={Number(page) === totalPages}
           data-testid="next"
         >
           Next
@@ -55,14 +56,14 @@ function Pagination() {
         <select
           value={limit}
           onChange={(e) => {
-            setLimit(Number(e.target.value));
-            setPage(1);
+            router.push({
+              pathname: router.pathname,
+              query: { ...router.query, page: '1', limit: e.target.value },
+            });
           }}
         >
           <option value={10}>10</option>
           <option value={20}>20</option>
-          <option value={30}>30</option>
-          <option value={40}>40</option>
         </select>
       </div>
     </div>

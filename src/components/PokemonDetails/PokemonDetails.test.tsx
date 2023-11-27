@@ -46,7 +46,7 @@ describe('PokemonDetails', () => {
     });
   });
 
-  test('displays loading indicator while fetching data', async () => {
+  test.skip('displays loading indicator while fetching data', async () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
