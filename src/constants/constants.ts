@@ -1,16 +1,16 @@
-import { IFormData } from '../interface/interface';
+import { Errors } from '../interface/interface';
 
 export const FILE_SIZE = 4000000;
 export const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 
-export const InitialFormData: IFormData = {
+export const defaultErrors: Errors = {
   name: '',
-  age: 0,
+  age: '',
   email: '',
   password: '',
   confirmPassword: '',
   gender: '',
-  terms: false,
+  terms: '',
   picture: '',
   country: '',
 };

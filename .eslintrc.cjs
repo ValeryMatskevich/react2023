@@ -42,6 +42,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/prefer-stateless-function': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'no-param-reassign': 'off',
     'jsx-a11y/label-has-associated-control': [
       2,
       {

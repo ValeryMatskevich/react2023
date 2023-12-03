@@ -3,7 +3,7 @@ import {
   FILE_SIZE,
   SUPPORTED_FORMATS,
   countries,
-} from '../../constants/constants';
+} from '../constants/constants';
 
 const schema = Yup.object().shape({
   name: Yup.string()
@@ -27,23 +27,24 @@ const schema = Yup.object().shape({
     .oneOf(['male', 'female'], 'Invalid gender')
     .required('Required'),
   terms: Yup.bool().oneOf([true], 'Must Accept Terms').required('Required'),
-  picture: Yup.mixed()
+  picture: Yup.mixed<FileList>()
     .required('A file is required')
-    .test('fileSize', 'File too large', (value: unknown) => {
-      if (value instanceof FileList) {
-        return value[0]?.size <= FILE_SIZE;
+    .test('fileSize', 'File too large', (value) => {
+      if (value && value[0] instanceof File) {
+        return value[0].size <= FILE_SIZE;
       }
-      return false;
+      return true;
     })
-    .test('fileFormat', 'Unsupported Format', (value: unknown) => {
-      if (value instanceof FileList) {
-        return SUPPORTED_FORMATS.includes(value[0]?.type);
+    .test('fileFormat', 'Unsupported Format', (value) => {
+      if (value && value[0] instanceof File) {
+        return SUPPORTED_FORMATS.includes(value[0].type);
       }
-      return false;
+      return true;
     }),
   country: Yup.string()
     .oneOf(countries, 'Invalid country')
     .required('Required'),
 });
 
+export type SchemaType = Yup.InferType<typeof schema>;
 export default schema;

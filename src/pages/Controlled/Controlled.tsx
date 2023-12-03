@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { Resolver, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useActions from '../../hooks/useActions';
-import schema from './schema';
-import { IFormData } from '../../interface/interface';
-import { countries } from '../../constants/constants';
+import schema from '../../yup/schema';
+import { IFormData, ISubmitForm } from '../../interface/interface';
 import styles from './Controlled.module.css';
+import Countries from '../../components/Countries/Countries';
+import convertToBase64 from '../../utils/utils';
 
 function Controlled() {
   const {
@@ -20,34 +21,19 @@ function Controlled() {
   });
   const navigate = useNavigate();
   const { setFormInList } = useActions();
-  const [imageUrl, setImageUrl] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const hadleOnChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    const image = event.target.files?.[0];
-    if (image) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const { result } = reader;
-
-        if (result && typeof result === 'string') {
-          setImageUrl(result);
-        }
-      };
-      reader.readAsDataURL(image);
-    }
-  };
 
   const onSubmit = async (data: IFormData) => {
     if (Object.keys(errors).length) {
       trigger();
       return;
     }
-    const imageBase64 = imageUrl;
-    const newData = { ...data, picture: imageBase64 };
-    console.log('NewDATA', newData);
+    const imageBase64 = data.picture
+      ? await convertToBase64(data.picture[0])
+      : '';
+
+    const newData: ISubmitForm = { ...data, picture: imageBase64 };
     setFormInList(newData);
     navigate('/');
   };
@@ -106,14 +92,7 @@ function Controlled() {
       <p>{errors.terms ? errors.terms.message : ' '}</p>
 
       <label htmlFor="picture">Picture</label>
-      <input
-        id="picture"
-        {...register('picture')}
-        type="file"
-        accept=".png, .jpeg, .jpg"
-        onChange={hadleOnChange}
-        required
-      />
+      <input id="picture" {...register('picture')} type="file" required />
       <p>{errors.picture ? errors.picture.message : ' '}</p>
 
       <label htmlFor="country">Country</label>
@@ -123,14 +102,14 @@ function Controlled() {
         {...register('country')}
         required
       />
-      <datalist id="countriesList">
-        {countries.map((country) => (
-          <option key={country} value={country} aria-label={country} />
-        ))}
-      </datalist>
+      <Countries />
       <p>{errors.country ? errors.country.message : ' '}</p>
 
-      <input type="submit" disabled={Object.keys(errors).length > 0} />
+      <input
+        type="submit"
+        value="Submit"
+        disabled={Object.keys(errors).length > 0}
+      />
     </form>
   );
 }

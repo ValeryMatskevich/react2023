@@ -1,7 +1,7 @@
 import { bindActionCreators } from '@reduxjs/toolkit';
 import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { actions as formDataActions } from '../store/forms';
+import { actions as formDataActions } from '../store/formsSlice';
 
 const rootActions = {
   ...formDataActions,
