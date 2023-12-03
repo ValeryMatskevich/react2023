@@ -15,6 +15,7 @@
     "abc": "vitest"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.2",
     "@reduxjs/toolkit": "^1.9.7",
     "@types/history": "^5.0.0",
     "axios": "^1.6.0",

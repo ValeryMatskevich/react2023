@@ -41,6 +41,15 @@ module.exports = {
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/prefer-stateless-function': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'jsx-a11y/label-has-associated-control': [
+      2,
+      {
+        required: {
+          some: ['nesting', 'id'],
+        },
+      },
+    ],
   },
   settings: {
     react: {
